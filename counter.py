@@ -1,5 +1,3 @@
-
-
 # @deprecated
 def countChars(string):
     # Create empty container for chars
@@ -23,5 +21,13 @@ def findPairs(findChars, string):
     return counter
 
 
-def percent(first, second):
-    return round(first / (first + second) * 100)
+def findGcParis(sequence):
+    return findPairs(["G", "C"], sequence)
+
+
+def findAtParis(sequence):
+    return findPairs(["A", "T"], sequence)
+
+
+def percent(first, second, decimals=2):
+    return round(first / (first + second) * 100, decimals)

@@ -1,6 +1,8 @@
 from reader import *
 from counter import *
 from primer import *
+from sequence import *
+
 
 # 1. Read .fasta file
 # Get path to .fasta file
@@ -9,35 +11,41 @@ fastaPath = input("Path to .fasta file: ")
 # Use function fromo "reader" package
 sequence = readSequence(fastaPath)
 
-# Print results
-print("Found sequence:")
-print(sequence)
-
-# Add empty break lines before next step
-print("\n\n")
-
 
 # 2. Count sequence
-gc = findPairs(['G', 'C'], sequence)
-at = findPairs(['A', 'T'], sequence)
-
+gc = findGcParis(sequence)
+at = findAtParis(sequence)
 proprtionGcAt = percent(gc, at)
 proprtionAtGc = percent(at, gc)
 
-print(''.join(["Zawartość GC w zadanej sekwencji wynosi: ", str(gc)]))
-print(''.join(["Zawartość AT w zadanej sekwencji wynosi: ", str(at)]))
-print(''.join(["GC stanowią ", str(proprtionGcAt), "% sekwencji"]))
-print(''.join(["AT stanowią ", str(proprtionAtGc), "% sekwencji"]))
+print('# Sequence:')
+verboseSequence(sequence, gc, at, proprtionGcAt, proprtionAtGc)
 
-print("\n\n")
 
-# 3. Get
-primerForward = getPrimerForward(sequence, 20)
-print('Found primer forward:')
-print(primerForward)
-print()
+# 3. Get primers
+# First is primer forward
+pf = getPrimerForward(sequence, 20)
 
-primerReverse = getPrimerReverse(sequence, 20)
-print('Found complementary primer reverse')
-print(primerReverse)
-print()
+pfGc = findGcParis(pf)
+pfAt = findAtParis(pf)
+
+ppfGc = percent(pfGc, pfAt)
+ppfAt = percent(pfAt, pfGc)
+
+print('# Primer forward:')
+verboseSequence(pf, pfGc, pfAt, ppfGc, ppfAt)
+
+# Second is primer reverse
+pr = getPrimerReverse(sequence, 20)
+
+prGc = findGcParis(pr)
+prAt = findAtParis(pr)
+
+pprGc = percent(prGc, prAt)
+pprAt = percent(prAt, prGc)
+
+print('# Primer reverse')
+verboseSequence(pr, prGc, prAt, pprGc, pprAt)
+
+
+# 4.
