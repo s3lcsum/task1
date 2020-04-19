@@ -3,7 +3,7 @@ def readSequence(fastaPath):
     lines = open(fastaPath).read().strip().split('\n')
 
     # When first line start with ">" character
-    if lines[0][0] is '>':
+    if lines[0][0] == '>':
         # just remove that line from memory
         del lines[0]
 
